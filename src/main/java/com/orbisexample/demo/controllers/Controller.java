@@ -1,5 +1,7 @@
 package com.orbisexample.demo.controllers;
 
+import com.orbisexample.demo.entities.Car;
+import com.orbisexample.demo.services.CarService;
 import com.orbisexample.demo.services.PeopleService;
 import com.orbisexample.demo.entities.Person;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +17,13 @@ import java.util.List;
 @Slf4j
 public class Controller {
     private final PeopleService peopleService;
+    private final CarService carService;
     private final URL url = new URL("http://localhost:8080/people");
 
 
-    public Controller(PeopleService peopleService) throws MalformedURLException {
+    public Controller(PeopleService peopleService, CarService carService) throws MalformedURLException {
         this.peopleService = peopleService;
+        this.carService = carService;
     }
 
     @RequestMapping("/people")
@@ -110,4 +114,41 @@ public class Controller {
     public Integer sumAllPeopleAges() {
         return peopleService.sumAllPeopleAges();
     }
+
+    @RequestMapping("/cars")
+    public List<Car> getCars() {
+        return carService.getAllCars();
+    }
+
+    @RequestMapping("/cars/{id}")
+    public Car getByCarId(@PathVariable Long id) {
+        return carService.getCarById(id);
+    }
+
+    @PostMapping("/cars")
+    public void addCar(@RequestBody Car car) {
+        carService.addCar(car);
+    }
+
+    @PutMapping("/cars")
+    public void editCar(@RequestBody Car car) {
+        carService.addCar(car);
+    }
+
+    @DeleteMapping("/cars/{id}")
+    public void deleteByCarId(@PathVariable Long id) {
+        carService.deleteCarByCarId(id);
+    }
+
+    @PostMapping("/cars/owner")
+    public void setOwner(@RequestParam Long personId, @RequestParam Long carId){
+        carService.addOwner(personId, carId);
+    }
+
+    @PostMapping("/people/cars/{id}")
+    public List<Car> getAllPersonsCars(@PathVariable Long id){
+    return peopleService.getAllPersonCars(id);
+    }
+
+
 }

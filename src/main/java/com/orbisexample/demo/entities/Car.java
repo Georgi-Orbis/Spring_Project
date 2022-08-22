@@ -24,8 +24,8 @@ import java.util.Set;
     private String model;
     @Column(name = "age")
     private int age;
-    @ManyToOne(optional = false)
-    private Person person;
+    @Column(name = "person_id")
+    private Long personID;
 
 }
 

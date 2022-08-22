@@ -22,8 +22,7 @@ public class Person {
     private String lastName;
     @Column(name = "age")
     private int age;
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Car.class)
-    private Set<Car> cars = new HashSet<>();
+
 
 }
 

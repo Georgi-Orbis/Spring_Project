@@ -1,23 +1,25 @@
 package com.orbisexample.demo.services;
+import com.orbisexample.demo.entities.Car;
 import com.orbisexample.demo.entities.Person;
+import com.orbisexample.demo.repositories.CarRepository;
 import com.orbisexample.demo.repositories.PeopleRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class PeopleService {
 
     private final PeopleRepository peopleRepository;
+    private final CarRepository carRepository;
 
-    public PeopleService(PeopleRepository peopleRepository) {
+    public PeopleService(PeopleRepository peopleRepository, CarRepository carRepository) {
         this.peopleRepository = peopleRepository;
+        this.carRepository = carRepository;
     }
     public List<Person> getAllPeople(){
-        return new ArrayList<>(peopleRepository.findAll());
+        return peopleRepository.findAll();
     }
     public Person getPersonById(Long id){
       return peopleRepository.findPersonById(id);
@@ -73,6 +75,11 @@ public class PeopleService {
                 .sum();
 
     }
+
+    public List<Car> getAllPersonCars(Long personId){
+    return carRepository.findAllByPersonID(personId);
+    }
+
 
 
 }
