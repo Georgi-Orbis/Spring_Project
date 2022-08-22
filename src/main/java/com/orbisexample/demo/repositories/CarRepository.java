@@ -12,6 +12,6 @@ public interface CarRepository extends CrudRepository<Car, Long> {
 
     List<Car> findAll();
     Car findCarByCarId(Long id);
-    List<Car> findAllByPersonID(Long personId);
+    List<Car> findAllByPersonId(Long id);
 
 }

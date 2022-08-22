@@ -24,9 +24,9 @@ import java.util.Set;
     private String model;
     @Column(name = "age")
     private int age;
-    @Column(name = "person_id")
-    private Long personID;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
 }
 
 

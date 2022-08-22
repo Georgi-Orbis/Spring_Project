@@ -76,8 +76,8 @@ public class PeopleService {
 
     }
 
-    public List<Car> getAllPersonCars(Long personId){
-    return carRepository.findAllByPersonID(personId);
+    public List<Car> getAllPersonCars(Long id){
+    return carRepository.findAllByPersonId(id);
     }
 
 

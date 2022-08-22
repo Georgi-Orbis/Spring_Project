@@ -1,5 +1,6 @@
 package com.orbisexample.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,9 @@ public class Person {
     @Column(name = "age")
     private int age;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "person")
+    private Set<Car> cars = new HashSet<>();
 
 }
 
