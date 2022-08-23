@@ -1,18 +1,23 @@
 package com.orbisexample.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Getter
+@Setter
+
 @Table(name = "people")
 public class Person {
     @Id
@@ -28,6 +33,8 @@ public class Person {
     @JsonIgnore
     @OneToMany(mappedBy = "person")
     private Set<Car> cars = new HashSet<>();
+
+
 
 }
 

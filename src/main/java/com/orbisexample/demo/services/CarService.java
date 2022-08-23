@@ -38,7 +38,7 @@ public class CarService {
 
     public void addOwner(Long personId, Long carId){
         Car car = carRepository.findCarByCarId(carId);
-        car.setPerson(peopleRepository.findPersonById(personId));
+        car.setPerson(peopleRepository.findById(personId).get());
         carRepository.save(car);
     }
 

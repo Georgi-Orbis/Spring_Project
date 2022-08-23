@@ -1,4 +1,6 @@
 package com.orbisexample.demo.dtos;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.orbisexample.demo.entities.Car;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -9,13 +11,12 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashSet;
+import java.util.Set;
 
 @XmlRootElement(name = "error")
 @XmlAccessorType(XmlAccessType.FIELD)
     @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Valid
     public class PersonDto {
 
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         private String lastName;
         @Min(18)
         private int age;
-
+        private Set<CarDto> cars = new HashSet<>();
     }
 
 
