@@ -42,5 +42,9 @@ public class CarService {
         carRepository.save(car);
     }
 
+    public List<Car> findAllCarsFromSelectedBrandAndModel(String brand, String model){
+    return carRepository.findAllByBrandAndModel(brand, model);
+    }
+
 
 }

@@ -1,13 +1,18 @@
 package com.orbisexample.demo.controllers;
 
+import com.orbisexample.demo.dtos.PersonDto;
 import com.orbisexample.demo.entities.Car;
 import com.orbisexample.demo.services.CarService;
 import com.orbisexample.demo.services.PeopleService;
 import com.orbisexample.demo.entities.Person;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
+import java.io.BufferedReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -18,26 +23,37 @@ import java.util.List;
 public class Controller {
     private final PeopleService peopleService;
     private final CarService carService;
+    private final ModelMapper modelMapper;
+
+    private final BufferedReader bufferedReader;
+
+
     private final URL url = new URL("http://localhost:8080/people");
 
-
-    public Controller(PeopleService peopleService, CarService carService) throws MalformedURLException {
+    @Autowired
+    public Controller(PeopleService peopleService, CarService carService, ModelMapper modelMapper, BufferedReader bufferedReader) throws MalformedURLException {
         this.peopleService = peopleService;
         this.carService = carService;
-    }
-
-    @RequestMapping("/people")
-    public List<Person> getPeople() {
-        return peopleService.getAllPeople();
+        this.modelMapper = modelMapper;
+        this.bufferedReader = bufferedReader;
     }
 
     @RequestMapping("/people/{id}")
-    public Person getById(@PathVariable Long id) {
-        return peopleService.getPersonById(id);
+    public PersonDto getById(@PathVariable Long id) {
+        Person person = peopleService.getPersonById(id);
+        return modelMapper.map(person, PersonDto.class);
+    }
+
+    @RequestMapping("/people")
+    public List<PersonDto> getAllPeople(){
+        List<Person> getAllPeople = peopleService.getAllPeople();
+        return getAllPeople.stream()
+                .map(p -> modelMapper.map(p, PersonDto.class)).toList();
     }
 
     @PostMapping("/people")
-    public void addPerson(@RequestBody Person person) {
+    public void addPerson(@Valid @RequestBody PersonDto personDto) {
+        Person person = modelMapper.map(personDto, Person.class);
         peopleService.addPerson(person);
     }
 
@@ -149,6 +165,12 @@ public class Controller {
     public List<Car> getAllPersonsCars(@PathVariable Long id){
     return peopleService.getAllPersonCars(id);
     }
+
+    @GetMapping("/cars/brand/model")
+    public List<Car> getAllCarsFromSelectedBrandAndModel(@RequestParam String brand,@RequestParam String model){
+    return carService.findAllCarsFromSelectedBrandAndModel(brand, model);
+    }
+
 
 
 }

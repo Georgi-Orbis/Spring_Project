@@ -1,8 +1,10 @@
 package com.orbisexample.demo.services;
+import com.orbisexample.demo.dtos.PersonDto;
 import com.orbisexample.demo.entities.Car;
 import com.orbisexample.demo.entities.Person;
 import com.orbisexample.demo.repositories.CarRepository;
 import com.orbisexample.demo.repositories.PeopleRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,16 +15,20 @@ public class PeopleService {
 
     private final PeopleRepository peopleRepository;
     private final CarRepository carRepository;
+    private final ModelMapper modelMapper;
 
-    public PeopleService(PeopleRepository peopleRepository, CarRepository carRepository) {
+    public PeopleService(PeopleRepository peopleRepository, CarRepository carRepository, ModelMapper modelMapper) {
         this.peopleRepository = peopleRepository;
         this.carRepository = carRepository;
+        this.modelMapper = modelMapper;
     }
-    public List<Person> getAllPeople(){
-        return peopleRepository.findAll();
-    }
+
     public Person getPersonById(Long id){
       return peopleRepository.findPersonById(id);
+    }
+
+    public List<Person> getAllPeople(){
+    return peopleRepository.findAll();
     }
     public void addPerson(Person person) {
         peopleRepository.save(person);
@@ -79,7 +85,6 @@ public class PeopleService {
     public List<Car> getAllPersonCars(Long id){
     return carRepository.findAllByPersonId(id);
     }
-
 
 
 }
