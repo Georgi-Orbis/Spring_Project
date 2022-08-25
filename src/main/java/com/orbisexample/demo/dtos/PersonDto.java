@@ -19,7 +19,6 @@ import java.util.Set;
     @Data
     @Valid
     public class PersonDto {
-
         private int id;
         @NotNull @Length(min = 2, max = 20)
         private String firstName;
