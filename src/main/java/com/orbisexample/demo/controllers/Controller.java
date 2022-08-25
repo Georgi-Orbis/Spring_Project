@@ -1,14 +1,12 @@
 package com.orbisexample.demo.controllers;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orbisexample.demo.dtos.CarDto;
 import com.orbisexample.demo.dtos.PersonDto;
 import com.orbisexample.demo.entities.Car;
+import com.orbisexample.demo.entities.User;
 import com.orbisexample.demo.services.CarService;
 import com.orbisexample.demo.services.PeopleService;
 import com.orbisexample.demo.entities.Person;
+import com.orbisexample.demo.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +17,7 @@ import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
 
 
 @RestController
@@ -32,16 +27,20 @@ public class Controller {
     private final CarService carService;
     private final ModelMapper modelMapper;
 
+    private final UserService userService;
+
+
     private final BufferedReader bufferedReader;
 
 
     private final URL url = new URL("http://localhost:8080/people");
 
     @Autowired
-    public Controller(PeopleService peopleService, CarService carService, ModelMapper modelMapper, BufferedReader bufferedReader) throws MalformedURLException {
+    public Controller(PeopleService peopleService, CarService carService, ModelMapper modelMapper, UserService userService, BufferedReader bufferedReader) throws MalformedURLException {
         this.peopleService = peopleService;
         this.carService = carService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
         this.bufferedReader = bufferedReader;
     }
 
@@ -54,8 +53,7 @@ public class Controller {
     @PostMapping("/people/{id}")
     public PersonDto sendByID(@PathVariable Long id){
         Person person = peopleService.getPersonById(id);
-        PersonDto personDto = modelMapper.map(person, PersonDto.class);
-        return personDto;
+        return modelMapper.map(person, PersonDto.class);
     }
 
     @RequestMapping("/people")
@@ -192,16 +190,13 @@ public class Controller {
     }
 
 
-    @GetMapping("/")
-    public String welcome(){
-        return("<h1>Welcome</h1>");
+    @PostMapping("/users/{username}")
+    public String postUserByUsername(@PathVariable String username){
+        return userService.getUserAuthority(username);
     }
-    @GetMapping("/admin")
-    public String welcomeAdmin(){
-        return("<h1>Welcome Admin</h1>");
-    }
-    @GetMapping("/user")
-    public String welcomeUser(){
-        return("<h1>Welcome User</h1>");
+
+    @PostMapping("/users/authority/{username}")
+    public String postUserAuthority(@PathVariable String username){
+        return userService.getUserAuthority(username);
     }
 }
