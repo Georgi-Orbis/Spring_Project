@@ -30,12 +30,11 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private User user;
     @OneToMany(mappedBy = "person")
     private Set<Car> cars = new HashSet<>();
-
-
-
 
 
 }

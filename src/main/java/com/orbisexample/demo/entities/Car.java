@@ -29,9 +29,9 @@ import java.util.Set;
     private String model;
     @Column(name = "age")
     private int age;
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
+    @JsonIgnore
     private Person person;
 }
 

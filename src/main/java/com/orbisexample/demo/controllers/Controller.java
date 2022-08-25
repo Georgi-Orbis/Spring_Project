@@ -51,14 +51,27 @@ public class Controller {
         return modelMapper.map(person, PersonDto.class);
     }
 
+    @PostMapping("/people/{id}")
+    public PersonDto sendByID(@PathVariable Long id){
+        Person person = peopleService.getPersonById(id);
+        PersonDto personDto = modelMapper.map(person, PersonDto.class);
+        return personDto;
+    }
+
     @RequestMapping("/people")
     public List<PersonDto> getAllPeople(){
         List<Person> getAllPeople = peopleService.getAllPeople();
         return getAllPeople.stream()
                 .map(p -> modelMapper.map(p, PersonDto.class)).toList();
     }
-
     @PostMapping("/people")
+    public List<PersonDto> postAllPeople(){
+        List<Person> getAllPeople = peopleService.getAllPeople();
+        return getAllPeople.stream()
+                .map(p -> modelMapper.map(p, PersonDto.class)).toList();
+    }
+
+    @PostMapping("/people/add")
     public void addPerson(@Valid @RequestBody PersonDto personDto) {
         Person person = modelMapper.map(personDto, Person.class);
         peopleService.addPerson(person);
