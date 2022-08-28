@@ -1,7 +1,7 @@
 package com.orbisexample.demo.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orbisexample.demo.entities.Person;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +25,5 @@ public class CarDto {
   private String model;
   private int age;
   @JsonIgnore
-  private Person person;
+  private UserDto userDto;
 }

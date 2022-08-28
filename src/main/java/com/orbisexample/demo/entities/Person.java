@@ -12,30 +12,30 @@ import java.util.List;
 import java.util.Set;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Getter
-@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Entity
+//@Getter
+//@Setter
 
-@Table(name = "people")
+//@Table(name = "people")
 public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
-    @Column(name = "age")
-    private int age;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
-    private User user;
-    @OneToMany(mappedBy = "person")
-    private Set<Car> cars = new HashSet<>();
-
-
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//    @Column(name = "first_name")
+//    private String firstName;
+//    @Column(name = "last_name")
+//    private String lastName;
+//    @Column(name = "age")
+//    private int age;
+//
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "username", referencedColumnName = "username")
+//    private User user;
+//    @OneToMany(mappedBy = "person")
+//    private Set<Car> cars = new HashSet<>();
+//
+//
 }
-
+//

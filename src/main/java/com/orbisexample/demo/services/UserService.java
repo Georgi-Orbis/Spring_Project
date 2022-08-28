@@ -1,26 +1,36 @@
 package com.orbisexample.demo.services;
 
 import com.orbisexample.demo.entities.User;
-import com.orbisexample.demo.repositories.AuthorityRepository;
 import com.orbisexample.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository) {
+
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
+
     }
 
     public User getUserByUsername(String username){
         return userRepository.findById(username).get();
     }
 
-    public String getUserAuthority(String username){
-        return  authorityRepository.findById(username).get().getAuthority();
 
+
+    public void addUser(User user){
+        userRepository.save(user);
+    }
+
+    public List<User> findAllUsers(){
+    return userRepository.findAll();
+    }
+
+    public User findUserByUsername(String username){
+        return userRepository.findByUserName(username).get();
     }
 }
