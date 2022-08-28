@@ -1,6 +1,5 @@
 package com.orbisexample.demo.dtos;
 
-import com.orbisexample.demo.entities.Person;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 

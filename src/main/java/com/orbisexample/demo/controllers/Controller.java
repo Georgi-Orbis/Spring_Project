@@ -4,7 +4,6 @@ import com.orbisexample.demo.dtos.UserDto;
 
 import com.orbisexample.demo.entities.User;
 import com.orbisexample.demo.services.CarService;
-import com.orbisexample.demo.services.PeopleService;
 
 import com.orbisexample.demo.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
-
-import java.io.BufferedReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -28,17 +25,18 @@ public class Controller {
     private final ModelMapper modelMapper;
 
     private final UserService userService;
+    private final CarService carService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-    private final URL url = new URL("http://localhost:8080/people");
+    private final URL url = new URL("http://localhost:8080");
 
     @Autowired
     public Controller(CarService carService, ModelMapper modelMapper, UserService userService) throws MalformedURLException {
         this.modelMapper = modelMapper;
         this.userService = userService;
-
+        this.carService = carService;
     }
 
     @GetMapping("/")
@@ -74,15 +72,12 @@ public class Controller {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        System.out.println("success");
         return this.userService.findAllUsers();
     }
 
 
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello";
-    }
+
+
 }
 
 

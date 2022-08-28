@@ -2,6 +2,7 @@ package com.orbisexample.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -28,22 +30,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         DaoAuthenticationConfigurer<AuthenticationManagerBuilder, UserDetailsService> detailsService = auth.userDetailsService(userDetailsService);
-        detailsService.passwordEncoder(new BCryptPasswordEncoder());
+        detailsService.passwordEncoder(getPasswordEncoder());
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
-                .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/**").hasRole("ADMIN")
-                .and().httpBasic();
+                .and().formLogin().and().httpBasic();
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }
 
