@@ -5,6 +5,7 @@ import com.orbisexample.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,9 +17,6 @@ public class UserService {
 
     }
 
-    public User getUserByUsername(String username){
-        return userRepository.findById(username).get();
-    }
 
 
 
@@ -32,5 +30,9 @@ public class UserService {
 
     public User findUserByUsername(String username){
         return userRepository.findByUserName(username).get();
+    }
+
+    public Optional<User> findUserByID(Long id){
+        return userRepository.findById(id);
     }
 }
