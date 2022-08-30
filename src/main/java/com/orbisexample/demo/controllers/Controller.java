@@ -44,6 +44,7 @@ import java.util.List;
         @Server(url = "http://localhost:8081/")}, info = @Info(title = "Users API", version = "1.1", description = "Users information"))
 @RestController
 @Slf4j
+
 public class Controller {
 
 
@@ -54,13 +55,8 @@ public class Controller {
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final URL url = new URL("http://localhost:8080");
-
-
     private final AuthenticationManager authenticationManager;
-
-
     private final JwtUtil jwtTokenUtil;
-
     private final MyUserDetailsService userDetailsService;
 
     @Autowired
