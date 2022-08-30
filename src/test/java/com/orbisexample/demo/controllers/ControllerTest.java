@@ -28,7 +28,7 @@ public class ControllerTest {
     @Test
     void findById() {
         assertEquals("admin", userRepository.findById(1L).get().getUserName());
-        assertEquals("pass", userRepository.findById(2L).get().getPassword());
+        assertEquals("$2a$10$zMvkNIYq21r49qx542cn.u/6WDz33tKGsjyWxHtT3/xizSKwPLySe", userRepository.findById(2L).get().getPassword());
     }
 
 
