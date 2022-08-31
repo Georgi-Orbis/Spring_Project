@@ -1,16 +1,12 @@
 package com.orbisexample.demo.controllers;
-
 import com.orbisexample.demo.entities.Car;
 import com.orbisexample.demo.entities.User;
-import com.orbisexample.demo.repositories.UserRepository;
-import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.crossstore.ChangeSetPersister;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,23 +15,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ControllerTest {
-    @Autowired
-    UserRepository userRepository;
-    private static User user;
-    private static Car car;
-
-    @BeforeAll
-    public static void createTestUser(){
+    User user;
+    Car car;
+    Car car1;
+    @BeforeEach
+    public void createTestUser(){
          user=  new User(1L,"username", "pass", true, "ROLE_ADMIN", "A",
                 "B", new HashSet<>());
     }
-    @BeforeAll
-    public static void createTestCar(){
-        car = new Car(1L, "brand", "model", 5, user);
+    @BeforeEach
+    public void createTestCar(){
+        car = new Car(1L, "brand", "model", 5, new User());
+        car1 = new Car(2L, "brand1", "model1", 3, new User());
     }
-
-
-
 
     @Test
      public void testCreateUserAndTestIfReturnsCorrectValues(){
@@ -52,7 +44,6 @@ public class ControllerTest {
         assertEquals("brand", car.getBrand());
         assertEquals("model", car.getModel());
         assertEquals(5, car.getAge());
-        assertEquals(user, car.getUser());
     }
     @Test
     public void testAddCarToUserCarList(){
@@ -60,6 +51,7 @@ public class ControllerTest {
         Set<Car> cars = user.getCars();
         cars.add(new Car());
         assertEquals(1, user.getCars().size());
+
     }
     @Test
     public void testGetCarFromEmptyUserCarSet(){
@@ -79,6 +71,23 @@ public class ControllerTest {
         assertEquals("ROLE_ADMIN,ROLE_USER", user.getRoles());
     }
 
+    @Test
+    public void testUserSetNewPassword(){
+        user.setPassword("new pass");
+        assertEquals("new pass", user.getPassword());
+    }
 
+    @Test
+    public void testIfCarsAreAddedCorrectlyInUser(){
+        Set<Car> carSet = new HashSet<>();
+        carSet.add(car);
+        carSet.add(car1);
 
+        Set<Car> cars = user.getCars();
+        cars.add(car);
+        cars.add(car1);
+        assertEquals(2, user.getCars().size());
+        assertIterableEquals(carSet, user.getCars());
+
+    }
 }
