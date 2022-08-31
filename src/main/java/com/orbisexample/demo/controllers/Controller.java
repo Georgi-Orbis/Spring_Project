@@ -38,6 +38,7 @@ import org.webjars.NotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 
 @SecurityScheme(name = "Basic Authentication", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 @SecurityScheme(name = "bearerAuth", scheme = "bearer", type = SecuritySchemeType.HTTP, bearerFormat = "JWT")
@@ -147,12 +148,12 @@ public class Controller {
         return this.userService.findAllUsers();
     }
 
-
+    @Operation(summary = "Finds user id by his username")
     @GetMapping("/users/id/{username}")
     public Long getUserIdByUserName(@PathVariable String username){
     return userService.findUserByUsername(username).getId();
     }
-
+    @Operation(summary = "Return list of Cars that belong to user with id")
     @GetMapping("/users/cars/{id}")
     public List<Car> getUsersCarsById(@PathVariable Long id){
         return userService.getUsersCarsById(id);
