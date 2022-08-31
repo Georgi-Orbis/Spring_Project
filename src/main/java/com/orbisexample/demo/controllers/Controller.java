@@ -5,6 +5,7 @@ import com.orbisexample.demo.config.AuthenticationResponse;
 import com.orbisexample.demo.config.JwtUtil;
 import com.orbisexample.demo.config.MyUserDetailsService;
 import com.orbisexample.demo.dtos.UserDto;
+import com.orbisexample.demo.entities.Car;
 import com.orbisexample.demo.entities.User;
 import com.orbisexample.demo.services.CarService;
 import com.orbisexample.demo.services.UserService;
@@ -144,6 +145,17 @@ public class Controller {
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return this.userService.findAllUsers();
+    }
+
+
+    @GetMapping("/users/id/{username}")
+    public Long getUserIdByUserName(@PathVariable String username){
+    return userService.findUserByUsername(username).getId();
+    }
+
+    @GetMapping("/users/cars/{id}")
+    public List<Car> getUsersCarsById(@PathVariable Long id){
+        return userService.getUsersCarsById(id);
     }
 
 

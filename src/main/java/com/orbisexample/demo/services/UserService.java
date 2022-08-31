@@ -1,6 +1,8 @@
 package com.orbisexample.demo.services;
 
+import com.orbisexample.demo.entities.Car;
 import com.orbisexample.demo.entities.User;
+import com.orbisexample.demo.repositories.CarRepository;
 import com.orbisexample.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +12,13 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final CarRepository carRepository;
 
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CarRepository carRepository) {
         this.userRepository = userRepository;
 
+        this.carRepository = carRepository;
     }
 
 
@@ -34,5 +38,9 @@ public class UserService {
 
     public Optional<User> findUserByID(Long id){
         return userRepository.findById(id);
+    }
+
+    public List<Car> getUsersCarsById(Long id) {
+    return carRepository.findAllByUserId(id);
     }
 }
