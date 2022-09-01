@@ -33,17 +33,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
-
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 
 @SecurityScheme(name = "Basic Authentication", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 @SecurityScheme(name = "bearerAuth", scheme = "bearer", type = SecuritySchemeType.HTTP, bearerFormat = "JWT")
 @OpenAPIDefinition(servers = {@Server(url = "http://localhost:8080/"),
-        @Server(url = "http://localhost:8081/")}, info = @Info(title = "Users API", version = "1.1", description = "Users information"))
+  @Server(url = "http://localhost:8081/")}, info = @Info(title = "Users API", version = "1.1", description = "Users information"))
 @RestController
 @Slf4j
 
@@ -62,7 +59,8 @@ public class Controller {
     private final MyUserDetailsService userDetailsService;
 
     @Autowired
-    public Controller(CarService carService, ModelMapper modelMapper, UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtTokenUtil, MyUserDetailsService userDetailsService) throws MalformedURLException {
+    public Controller(CarService carService, ModelMapper modelMapper, UserService userService, AuthenticationManager authenticationManager,
+                      JwtUtil jwtTokenUtil, MyUserDetailsService userDetailsService) throws MalformedURLException {
 
         this.modelMapper = modelMapper;
         this.userService = userService;
@@ -117,12 +115,12 @@ public class Controller {
 
     @Operation(summary = "Get User by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the user",
+        @ApiResponse(responseCode = "200", description = "Found the user",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+        @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found",
+        @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content)})
     @SecurityRequirement(name = "Basic Authentication")
     @GetMapping("/users/{id}")
@@ -150,12 +148,13 @@ public class Controller {
 
     @Operation(summary = "Finds user id by his username")
     @GetMapping("/users/id/{username}")
-    public Long getUserIdByUserName(@PathVariable String username){
-    return userService.findUserByUsername(username).getId();
+    public Long getUserIdByUserName(@PathVariable String username) {
+        return userService.findUserByUsername(username).getId();
     }
+
     @Operation(summary = "Return list of Cars that belong to user with id")
     @GetMapping("/users/cars/{id}")
-    public List<Car> getUsersCarsById(@PathVariable Long id){
+    public List<Car> getUsersCarsById(@PathVariable Long id) {
         return userService.getUsersCarsById(id);
     }
 
