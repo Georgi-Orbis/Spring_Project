@@ -1,7 +1,7 @@
 package com.orbisexample.demo;
 
-import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @XmlRootElement(name = "error")
 public class ErrorResponse {
