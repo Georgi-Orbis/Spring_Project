@@ -2,11 +2,11 @@ package com.orbisexample.demo.config;
 
 import com.orbisexample.demo.utils.ValidationUtil;
 import com.orbisexample.demo.utils.ValidationUtilImpl;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 
 @Configuration

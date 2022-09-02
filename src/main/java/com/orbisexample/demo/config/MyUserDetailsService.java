@@ -2,7 +2,6 @@ package com.orbisexample.demo.config;
 
 import com.orbisexample.demo.entities.User;
 import com.orbisexample.demo.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
