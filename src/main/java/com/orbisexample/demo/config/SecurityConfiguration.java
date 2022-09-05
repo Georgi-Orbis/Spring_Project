@@ -16,9 +16,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-@Configuration
 @EnableWebSecurity
+@Configuration
+
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
@@ -45,12 +45,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
+    @SuppressWarnings("checkstyle:CommentsIndentation")
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/authenticate").permitAll()
-                .antMatchers("/", "/swagger-ui/**").permitAll()
+                .antMatchers("/", "/swagger-ui/**", "cars/**", "/cars").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/v3/api-docs").permitAll()
                 .antMatchers("/users/**", "/user/**").hasAnyRole("ADMIN", "USER")

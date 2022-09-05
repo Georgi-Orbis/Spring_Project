@@ -31,6 +31,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 import java.net.MalformedURLException;
@@ -41,7 +42,7 @@ import java.util.List;
 @SecurityScheme(name = "bearerAuth", scheme = "bearer", type = SecuritySchemeType.HTTP, bearerFormat = "JWT")
 @OpenAPIDefinition(servers = {@Server(url = "http://localhost:8080/"),
   @Server(url = "http://localhost:8081/")}, info = @Info(title = "Users API", version = "1.1", description = "Users information"))
-@RestController
+@org.springframework.stereotype.Controller
 @Slf4j
 
 public class Controller {
@@ -158,6 +159,49 @@ public class Controller {
         return userService.getUsersCarsById(id);
     }
 
+
+    @GetMapping("/cars")
+    public String listCars(Model model) {
+        model.addAttribute("cars", carService.getAllCars());
+        return "cars";
+    }
+
+    @GetMapping("/cars/new")
+    public String createCarForm(Model model) {
+        Car car = new Car();
+        model.addAttribute("car", car);
+        return "create_car";
+    }
+
+    @PostMapping("/cars")
+    public String saveCar(@ModelAttribute("car") Car car) {
+        carService.saveCar(car);
+        return "redirect:/cars";
+    }
+
+    @GetMapping("cars/edit/{carId}")
+    public String editCarForm(@PathVariable Long carId, Model model) {
+        model.addAttribute("car", carService.getCarById(carId));
+        return "edit_car";
+    }
+
+    @PostMapping("/cars/{carId}")
+    public String updateCar(@PathVariable Long carId,
+                            @ModelAttribute("car") Car car, Model model) {
+        Car currentCar = carService.getCarById(carId);
+        currentCar.setCarId(carId);
+        currentCar.setBrand(car.getBrand());
+        currentCar.setModel(car.getModel());
+        currentCar.setAge(car.getAge());
+        carService.updateCar(currentCar);
+        return "redirect:/cars";
+    }
+
+    @GetMapping("cars/{carId}")
+    public String deleteCar(@PathVariable Long carId) {
+        carService.deleteCarByCarId(carId);
+        return "redirect:/cars";
+    }
 
 }
 

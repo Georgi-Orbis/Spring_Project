@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org" lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center"> Create New Car</h1>
+                <div class="card-body">
+                    <form th:action="@{/cars}" th:object="${car}" method="POST">
+                        <div class="form-group">
+                            <label>Car Brand</label>
+                            <input
+                            type="text"
+                            name="brand"
+                            th:field="*{brand}"
+                            class="form-control"
+                            placeholder="Enter Car Brand"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Car Model</label>
+                            <input
+                                    type="text"
+                                    name="model"
+                                    th:field="*{model}"
+                                    class="form-control"
+                                    placeholder="Enter Car Model"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Car Age</label>
+                            <input
+                                    type="text"
+                                    name="age"
+                                    th:field="*{age}"
+                                    class="form-control"
+                                    placeholder="Enter Car Age"
+                            />
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

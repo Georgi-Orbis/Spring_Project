@@ -4,6 +4,7 @@ spring:
     user:
       name: admin
       password: admin
+
   datasource:
     url: 'jdbc:mysql://localhost:3306/spring_test?createDatabaseIfNotExist=TRUE'
     username: Georgi
